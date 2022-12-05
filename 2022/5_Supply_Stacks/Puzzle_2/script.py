@@ -80,13 +80,12 @@ with open("input", 'r') as file:
             for i in range(0, instruction[0]):
                 stacks[instruction[2] - 1].insert(0, stacks[instruction[1] - 1].pop(0))
         elif instruction[0] > 1:
-            for i in range(0, instruction[0]):
-                if instruction[0] > len(stacks[instruction[1]]):
-                    stacks[instruction[2] - 1][:0] = stacks[instruction[1] - 1][0:]
-                    del stacks[instruction[1] - 1][0:]
-                else:
-                    stacks[instruction[2] - 1][:0] = stacks[instruction[1] - 1][0:instruction[0] + 1]
-                    del stacks[instruction[1] - 1][0:instruction[0] + 1]
+            if instruction[0] >= len(stacks[instruction[1] - 1]):
+                stacks[instruction[2] - 1][:0] = stacks[instruction[1] - 1][0:]
+                del stacks[instruction[1] - 1][0:]
+            else:
+                stacks[instruction[2] - 1][:0] = stacks[instruction[1] - 1][0:instruction[0]]
+                del stacks[instruction[1] - 1][0:instruction[0]]
 
 print_stacks(stacks)
 for stack in stacks:
